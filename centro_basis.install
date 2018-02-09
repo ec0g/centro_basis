@@ -8,3 +8,9 @@ function centro_basis_uninstall() {
     ->getEditable('centro_basis.settings')
     ->delete();
 }
+
+function centro_basis_install() {
+  $adminRole = \Drupal\user\Entity\Role::load('administrator');
+  $adminRole->grantPermission('administer centro_basis');
+  $adminRole->save();
+}
