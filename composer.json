@@ -1,5 +1,5 @@
 {
-  "name": "drupal/centro_basis",
+  "name": "ec0g/centro_basis",
   "description": "Integrates Centro's Basis product into Drupal.",
   "type": "drupal-module",
   "authors": [
