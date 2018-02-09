@@ -1,0 +1,13 @@
+{
+  "name": "drupal/centro_basis",
+  "description": "Integrates Centro's Basis product into Drupal.",
+  "type": "drupal-module",
+  "authors": [
+    {
+      "name": "Goce Evtimovski",
+      "homepage": "https://www.drupal.org/u/ec0g"
+    }
+  ],
+  "license": "GPL-2.0+",
+  "require": {}
+}

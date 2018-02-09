@@ -1,0 +1,4 @@
+langcode: 'en'
+rt_pixel:
+  is_enabled: false
+  uri: ''

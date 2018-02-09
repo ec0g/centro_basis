@@ -1,0 +1,5 @@
+name: Centro Basis Integration
+type: module
+description: Integrates the current site with the Centro Basis product. Currently it only provides a solution for embedding a retargeting pixel in the body of the content area
+core: 8.x
+version: 1.x-dev

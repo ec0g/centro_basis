@@ -1,0 +1,5 @@
+centro_basis.settings_form:
+  title: 'Centro Basis'
+  description: 'Configure the Centro Basis product integration.'
+  route_name: centro_basis.settings_form
+  parent: system.admin_config_system

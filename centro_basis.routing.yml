@@ -1,0 +1,7 @@
+centro_basis.settings_form:
+  path: '/admin/config/system/centro-basis/retargeting-pixel'
+  defaults:
+    _form: '\Drupal\centro_basis\Form\RetargetingPixelSettingsForm'
+    _title: 'Retargeting Pixel Settings Form'
+  requirements:
+    _permission: 'administer centro_basis'

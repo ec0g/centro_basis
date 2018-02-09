@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implement hook_uninstall().
+ */
+function centro_basis_uninstall() {
+  \Drupal::configFactory()
+    ->getEditable('centro_basis.settings')
+    ->delete();
+}
