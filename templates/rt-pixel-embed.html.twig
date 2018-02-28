@@ -1,7 +1,7 @@
 {% if rt_pixel_uri %}
     {% spaceless %}
         <script type="text/javascript">
-            var ssaUrl = ('https:' == document.location.protocol ? 'https://' : 'http://') + {{ rt_pixel_uri }};
+            var ssaUrl = ('https:' == document.location.protocol ? 'https://' : 'http://') + '{{ rt_pixel_uri }}';
             new Image().src = ssaUrl;
             (function (d) {
                 var syncUrl = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'pixel-a.basis.net/dmp/asyncPixelSync';
