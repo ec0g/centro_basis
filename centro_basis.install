@@ -11,6 +11,8 @@ function centro_basis_uninstall() {
 
 function centro_basis_install() {
   $adminRole = \Drupal\user\Entity\Role::load('administrator');
-  $adminRole->grantPermission('administer centro_basis');
-  $adminRole->save();
+  if($adminRole instanceof \Drupal\user\RoleInterface){
+    $adminRole->grantPermission('administer centro_basis');
+    $adminRole->save();
+  }
 }
