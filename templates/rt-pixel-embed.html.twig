@@ -1,10 +1,10 @@
-{% if rt_pixel_uri %}
+{% if rt_pixel_uri and rt_pixel_sync_uri %}
     {% spaceless %}
         <script type="text/javascript">
             var ssaUrl = ('https:' == document.location.protocol ? 'https://' : 'http://') + '{{ rt_pixel_uri }}';
             new Image().src = ssaUrl;
             (function (d) {
-                var syncUrl = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'pixel-a.basis.net/dmp/asyncPixelSync';
+                var syncUrl = ('https:' == document.location.protocol ? 'https://' : 'http://') + '{{ rt_pixel_sync_uri }}';
                 var iframe = d.createElement('iframe');
                 (iframe.frameElement || iframe).style.cssText = "width: 0; height: 0; border: 0;";
                 iframe.src = "javascript:false";

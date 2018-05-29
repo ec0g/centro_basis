@@ -48,7 +48,7 @@ class RetargetingPixelSettingsForm extends FormBase {
   /**
    * Form constructor.
    *
-   * @param array                                $form
+   * @param array $form
    *   An associative array containing the structure of the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
@@ -69,6 +69,17 @@ class RetargetingPixelSettingsForm extends FormBase {
       '#title' => $this->t('Retargeting Pixel URL'),
       '#description' => $this->t("This value will automatically get populated when you copy and paste the rt embed code (provided by Centro) in the field bellow. <br />This value should looks like: <strong>pixel-a.basis.net/iap/7f1874304d399254</strong>"),
       '#default_value' => $this->editableConfig->get('rt_pixel.uri'),
+      '#size' => 100,
+      '#attributes' => [
+        'disabled' => "disabled",
+      ],
+    ];
+
+    $form['rt_pixel_sync_uri'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Retargeting Pixel Sync URI'),
+      '#description' => $this->t("This value will automatically get populated when you copy and paste the rt embed code (provided by Centro) in the field bellow. <br />This value should looks like: <strong>pixel-a.basis.net/dmp/asyncPixelSync</strong>"),
+      '#default_value' => $this->editableConfig->get('rt_pixel.syncUri'),
       '#size' => 100,
       '#attributes' => [
         'disabled' => "disabled",
@@ -98,14 +109,20 @@ class RetargetingPixelSettingsForm extends FormBase {
 
     // if the user didn't supply an embed code, then we don't need to make any changes.
     if (!empty($embedCode)) {
-      $rtPixelPattern = '#\+\s*\'([\w\/\.-]+)\'\s*;\s*new\s+Image#';
-      preg_match($rtPixelPattern, $embedCode, $matches);
+      $rtPixelPattern = "#\'https?:\/\/\'\)\s*\+\s*'([\w\/\.-]+)'\s*;#i";
+      preg_match_all($rtPixelPattern, $embedCode, $matches);
 
-      if (empty($matches[1])) {
+      if (empty($matches[1][0])) {
         $form_state->setError($form['rt_pixel_embed_code'], "Ooops! We couldn't find the RT pixel location. See sample bellow.");
       }
-      else {
-        $form_state->setValue('rt_pixel_uri', $matches[1]);
+
+      if (empty($matches[1][1])) {
+        $form_state->setError($form['rt_pixel_embed_code'], "Ooops! We couldn't find the RT Sync pixel location. See sample bellow.");
+      }
+
+      if (!empty($matches[1][0]) && !empty($matches[1][1])) {
+        $form_state->setValue('rt_pixel_uri', $matches[1][0]);
+        $form_state->setValue('rt_pixel_sync_uri', $matches[1][1]);
       }
     }
   }
@@ -113,13 +130,15 @@ class RetargetingPixelSettingsForm extends FormBase {
   /**
    * Form submission handler.
    *
-   * @param array                                $form
+   * @param array $form
    *   An associative array containing the structure of the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->editableConfig->set('rt_pixel.uri', $form_state->getValue('rt_pixel_uri', ''))
+    $this->editableConfig
+      ->set('rt_pixel.uri', $form_state->getValue('rt_pixel_uri', ''))
+      ->set('rt_pixel.syncUri', $form_state->getValue('rt_pixel_sync_uri', ''))
       ->set('rt_pixel.is_enabled', $form_state->getValue('is_enabled'), 0)
       ->save();
 

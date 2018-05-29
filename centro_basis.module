@@ -5,6 +5,7 @@ function centro_basis_theme() {
     'rt_pixel_embed' => [
       'variables' => [
         'rt_pixel_uri' => '',
+        'rt_pixel_sync_uri' => '',
       ],
     ],
   ];
@@ -14,8 +15,7 @@ function centro_basis_preprocess_page(&$vars) {
   if (!isset($vars['page']['content'])) {
     return;
   }
-  $rtPixelConfig = \Drupal::config('centro_basis.settings')
-    ->get('rt_pixel');
+  $rtPixelConfig = \Drupal::config('centro_basis.settings')->get('rt_pixel');
 
   // if the rt pixel embed is not enabled then there's nothing for us to do.
   if (!$rtPixelConfig['is_enabled']) {
@@ -25,6 +25,7 @@ function centro_basis_preprocess_page(&$vars) {
   $vars['page']['content']['rt_pixel_embed'] = [
     '#theme' => 'rt_pixel_embed',
     '#rt_pixel_uri' => $rtPixelConfig['uri'],
+    '#rt_pixel_sync_uri' => $rtPixelConfig['syncUri'],
     '#cache' => [
       'tags' => ['config:rt_pixel'],
     ],
